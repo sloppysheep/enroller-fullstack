@@ -39,6 +39,7 @@ public class ParticipantRestController {
                     HttpStatus.CONFLICT);
         }
         participantService.add(participant);
+//        return new ResponseEntity<String>(participant.getLogin(), HttpStatus.CREATED);
         return new ResponseEntity<Participant>(participant, HttpStatus.CREATED);
     }
 

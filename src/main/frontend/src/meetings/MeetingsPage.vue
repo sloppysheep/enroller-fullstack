@@ -31,7 +31,15 @@
         },
         methods: {
             addNewMeeting(meeting) {
-                this.meetings.push(meeting);
+                this.$http.post('meetings',meeting)
+                .then(response => {
+                    this.meetings.push(meeting);
+                	//this.success('Konto zostało założone. Możesz się zalogować.');
+                    //  this.registering = false;
+                })
+                .catch(response => this.failure(
+                //'Błąd przy zakładaniu konta. Kod odpowiedzi: ' + response.status
+                ));
             },
             addMeetingParticipant(meeting) {
                 meeting.participants.push(this.username);

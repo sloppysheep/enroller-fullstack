@@ -38,9 +38,6 @@
                 	//this.success('Konto zostało założone. Możesz się zalogować.');
                     //  this.registering = false;
                 })
-                .catch(response => this.failure(
-                //'Błąd przy zakładaniu konta. Kod odpowiedzi: ' + response.status
-                ));
             },
             addMeetingParticipant(meeting) {
                 meeting.participants.push(this.username);
@@ -49,10 +46,10 @@
                 meeting.participants.splice(meeting.participants.indexOf(this.username), 1);
             },
             deleteMeeting(meeting) {
-            	this.$http.delete('meetings/'+meeting.id);
-            	//.then(response => {
-            		//this.getMeetings();
-            	//});
+            	this.$http.delete('meetings/'+meeting.id)
+            	.then(response => {
+            		this.getMeetings();
+            	});
                 //this.meetings.splice(this.meetings.indexOf(meeting), 1);
             },
             getMeetings() {

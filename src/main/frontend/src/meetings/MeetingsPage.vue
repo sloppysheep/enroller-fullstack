@@ -33,7 +33,8 @@
             addNewMeeting(meeting) {
                 this.$http.post('meetings',meeting)
                 .then(response => {
-                    this.meetings.push(meeting);
+                    //this.meetings.push(meeting);
+                    this.getMeetings();
                 	//this.success('Konto zostało założone. Możesz się zalogować.');
                     //  this.registering = false;
                 })
@@ -48,8 +49,22 @@
                 meeting.participants.splice(meeting.participants.indexOf(this.username), 1);
             },
             deleteMeeting(meeting) {
-                this.meetings.splice(this.meetings.indexOf(meeting), 1);
+            	this.$http.delete('meetings/'+meeting.id);
+            	//.then(response => {
+            		//this.getMeetings();
+            	//});
+                //this.meetings.splice(this.meetings.indexOf(meeting), 1);
+            },
+            getMeetings() {
+            	this.$http.get('meetings')
+            	.then(response => {
+            		this.meetings = response.body
+            	})
+            	.catch();
             }
+        },
+        mounted() {
+        	this.getMeetings();
         }
     }
 </script>

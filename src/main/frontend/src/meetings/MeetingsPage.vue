@@ -29,6 +29,9 @@
                 meetings: []
             };
         },
+        mounted() {
+        	this.getMeetings();
+        },
         methods: {
             addNewMeeting(meeting) {
                 this.$http.post('meetings',meeting)
@@ -37,16 +40,24 @@
                     this.getMeetings();
                 	//this.success('Konto zostało założone. Możesz się zalogować.');
                     //  this.registering = false;
-                })
+                });
             },
             addMeetingParticipant(meeting) {
-                meeting.participants.push(this.username);
-            },
+            	this.$http.post('meetings/' + meeting.id + "/participants/" + this.username)
+            	.then(response => {
+            		this.getMeetings();
+            	});
+            	//meeting.participants.push(this.username);
+            }, 
             removeMeetingParticipant(meeting) {
-                meeting.participants.splice(meeting.participants.indexOf(this.username), 1);
+            	this.$http.delete('meetings/' + meeting.id + "/participants/" + this.username)
+            	.then(response => {
+            		this.getMeetings();
+            	});
+                //meeting.participants.splice(meeting.participants.indexOf(this.username), 1);
             },
             deleteMeeting(meeting) {
-            	this.$http.delete('meetings/'+meeting.id)
+            	this.$http.delete('meetings/' + meeting.id)
             	.then(response => {
             		this.getMeetings();
             	});
@@ -59,9 +70,6 @@
             	})
             	.catch();
             }
-        },
-        mounted() {
-        	this.getMeetings();
         }
     }
 </script>
